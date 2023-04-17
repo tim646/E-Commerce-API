@@ -73,7 +73,12 @@ WSGI_APPLICATION = 'core.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': env.str('DB_ENGINE'),
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'USER': env.str('DB_USER'),
+        'HOST': env.str('DB_HOST'),
+        'NAME': env.str('DB_NAME'),
+        'PASSWORD': env.str('DB_PASSWORD'),
+        'PORT': env.str('DB_PORT')
+
     }
 }
 
