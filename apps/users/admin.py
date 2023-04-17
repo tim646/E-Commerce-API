@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from apps.users.models import User
+from apps.users.models import User, Saved
 
 
 # Register your models here.
@@ -8,3 +8,6 @@ from apps.users.models import User
 @admin.register(User)
 class UserAdmin(admin.ModelAdmin):
     exclude = ("is_deleted",)
+
+
+admin.site.register(Saved)
