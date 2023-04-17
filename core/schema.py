@@ -8,9 +8,9 @@ from .generator import BothHttpAndHttpsSchemaGenerator
 
 schema_view = get_schema_view(
     openapi.Info(
-        title="MY API",
+        title="E-Commerce API",
         default_version="v1",
-        description="UIC Group",
+        description="E-Commerce API",
         terms_of_service="https://www.google.com/policies/terms/",
         contact=openapi.Contact(email="temurbek.interview@gmail.com"),
         license=openapi.License(name="BSD License"),

@@ -13,7 +13,8 @@ def trigger_error(request):
 urlpatterns = [
     path("api/v1/sentry/TriggerError", trigger_error),
     path("admin/", admin.site.urls),
-    # path("api/v1/users/", include("apps.users.urls")),
+    # path('captcha/', include('captcha.urls')),
+    path("api/v1/", include('apps.v1')),
 ]
 
 urlpatterns += swagger_urlpatterns

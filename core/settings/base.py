@@ -27,8 +27,11 @@ DJANGO_APPS = [
 ]
 
 CUSTOM_APPS = [
-
+    'apps.users.apps.UsersConfig',
+    'apps.product.apps.ProductConfig',
+    'apps.common.apps.CommonConfig',
 ]
+
 
 THIRD_PARTY_APPS = [
     'rest_framework',
@@ -67,6 +70,7 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'core.wsgi.application'
 
+AUTH_USER_MODEL = 'users.User'
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
@@ -125,3 +129,8 @@ MEDIA_ROOT = BASE_DIR / "media"
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+RECAPTCHA_PUBLIC_KEY = env.str("RECAPTCHA_PUBLIC_KEY")
+RECAPTCHA_PRIVATE_KEY = env.str("RECAPTCHA_PRIVATE_KEY")
+
+RECAPTCHA_VERIFY_REQUEST_TIMEOUT = 10
