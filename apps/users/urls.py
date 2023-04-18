@@ -1,7 +1,8 @@
 from django.urls import path, include
-
+from .api_endpoints import auth
 app_name = 'users'
 
 urlpatterns = [
-    # path('users/', include('apps.users.urls')),
+    path('login/', auth.LoginView.as_view(), name='auth-login'),
+    path('create/', auth.RegisterView.as_view(), name='auth-create'),
 ]

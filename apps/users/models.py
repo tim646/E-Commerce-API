@@ -5,6 +5,7 @@ from phonenumber_field.modelfields import PhoneNumberField
 from django.contrib.auth.models import AbstractUser
 from django.contrib.auth.validators import UnicodeUsernameValidator
 from django.db import models
+from rest_framework_simplejwt.tokens import RefreshToken
 
 from apps.common.models import TimeStampedModel
 from apps.users.managers import SoftDeleteUserManager
@@ -32,20 +33,21 @@ class User(AbstractUser, TimeStampedModel):
     )
 
     is_deleted = models.BooleanField("Is deleted", default=False)
+    is_active = models.BooleanField("Is active", default=True)
     email = models.EmailField("Email", unique=True)
     address = models.CharField("Address", max_length=255, null=True, blank=True)
 
     objects = SoftDeleteUserManager()
     USERNAME_FIELD = "phone_number"
-    REQUIRED_FIELDS = []  # type: ignore
+    REQUIRED_FIELDS = ["username", "password"]  # type: ignore
 
     def __str__(self):
+        if self.username:
+            return self.username
         if self.phone_number:
             return str(self.phone_number)
         if self.email:
             return self.email
-        if self.username:
-            return self.username
 
     def prepare_to_delete(self):
         self.is_deleted = True
@@ -53,6 +55,14 @@ class User(AbstractUser, TimeStampedModel):
             if getattr(self, x):
                 setattr(self, x, f"DELETED_{self.id}_{getattr(self, x)}")
         self.save()
+
+    @property
+    def tokens(self):
+        refresh = RefreshToken.for_user(self)
+        return {
+            'refresh': str(refresh),
+            'access': str(refresh.access_token),
+        }
 
     class Meta:
         verbose_name = "User"

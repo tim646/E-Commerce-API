@@ -16,6 +16,7 @@ class UserManager(djUserManager):
         Create and save a user with the given username, email, and password.
         """
         email = self.normalize_email(email)
+
         # Lookup the real model class from the global app registry so this
         # manager method can be used in migrations. This is fine because
         # managers are by definition working on the real model.
@@ -23,6 +24,7 @@ class UserManager(djUserManager):
         username = GlobalUserModel.normalize_username(username)
         user = self.model(username=username, email=email, **extra_fields)
         user.password = make_password(password)
+        user.is_active = True
         user.save(using=self._db)
         return user
 
