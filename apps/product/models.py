@@ -60,7 +60,7 @@ class Product(models.Model):
     brand = models.ForeignKey(Brand, on_delete=models.CASCADE, related_name='products')
     supplier = models.ForeignKey(Supplier, on_delete=models.CASCADE, related_name='products')
     original_price = models.DecimalField(max_digits=10, decimal_places=2, verbose_name='Original price')
-    discount_percentage = models.IntegerField(verbose_name='Discount percentage', default=0)
+    discount_percentage = models.PositiveIntegerField(verbose_name='Discount percentage', default=0)
     quantity = models.IntegerField(verbose_name='Quantity')
     image = models.ImageField(upload_to='product/', blank=True, null=True, verbose_name='Image')
     product_type = models.ForeignKey(ProductType, on_delete=models.CASCADE, related_name='products')
@@ -70,7 +70,7 @@ class Product(models.Model):
 
     @property
     def sell_price(self):
-        return self.original_price - (self.original_price * self.discount_percentage / 100)
+        return '{:.2f}'.format(self.original_price - (self.original_price * self.discount_percentage / 100))
 
     @property
     def is_in_stock(self):
@@ -91,9 +91,11 @@ class ProductImage(models.Model):
 class ProductReview(models.Model):
     product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='reviews')
     user = models.ForeignKey('users.User', on_delete=models.CASCADE, related_name='reviews')
-    rating = models.IntegerField(verbose_name='Rating', validators=[MinValueValidator(1), MaxValueValidator(5)])
-    comment = models.TextField(verbose_name='Comment')
+    rating = models.IntegerField(verbose_name='Rating', validators=[MinValueValidator(1), MaxValueValidator(10)])
+    comment = models.TextField(blank=True, null=True, verbose_name='Comment')
     date_created = models.DateTimeField(auto_now_add=True, verbose_name='Date created')
 
     def __str__(self):
         return self.product.name
+
+
