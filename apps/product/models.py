@@ -59,7 +59,7 @@ class Product(models.Model):
     supplier = models.ForeignKey(Supplier, on_delete=models.CASCADE, related_name="products")
     original_price = models.DecimalField(max_digits=10, decimal_places=2, verbose_name="Original price")
     discount_percentage = models.PositiveIntegerField(verbose_name="Discount percentage", default=0)
-    quantity = models.IntegerField(verbose_name="Quantity")
+    quantity = models.PositiveIntegerField(verbose_name="Quantity", default=1)
     image = models.ImageField(upload_to="product/%Y/%m/%d", blank=True, null=True, verbose_name="Image")
     product_type = models.ForeignKey(ProductType, on_delete=models.CASCADE, related_name="products")
     material = models.CharField(max_length=50, verbose_name="Material")

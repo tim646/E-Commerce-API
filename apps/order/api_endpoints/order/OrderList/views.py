@@ -6,6 +6,7 @@ from apps.order.models import Order
 
 
 class OrderListView(ListAPIView):
+
     queryset = Order.objects.all()
     serializer_class = OrderListSerializer
 

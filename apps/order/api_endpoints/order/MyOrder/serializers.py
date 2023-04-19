@@ -3,12 +3,11 @@ from rest_framework.serializers import ModelSerializer
 from apps.order.models import Order
 
 
-class OrderListSerializer(ModelSerializer):
+class MyOrderListSerializer(ModelSerializer):
     class Meta:
         model = Order
         fields = (
-            'id',
-            'user',
+            'status',
             'payment_method',
             'status',
             'cart',
