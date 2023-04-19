@@ -1,6 +1,7 @@
 import os
 from pathlib import Path
 
+from django.utils.translation import gettext
 from environs import Env
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -30,6 +31,7 @@ CUSTOM_APPS = [
     'apps.users.apps.UsersConfig',
     'apps.product.apps.ProductConfig',
     'apps.common.apps.CommonConfig',
+    'apps.order.apps.OrderConfig'
 ]
 
 THIRD_PARTY_APPS = [

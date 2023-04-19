@@ -1,0 +1,3 @@
+MODELTRANSLATION_TRANSLATION_FILES = (
+    'apps.order.',
+)
