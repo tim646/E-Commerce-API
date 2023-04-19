@@ -56,8 +56,8 @@ class Payment(TimeStampedModel):
 class Order(TimeStampedModel):
     user = ForeignKey("users.User", CASCADE, verbose_name='Order')
     payment_method = CharField(max_length=24, choices=PaymentMethodChoice.choices, verbose_name='Payment Method')
-    cart = OneToOneField("order.Cart", CASCADE, verbose_name='Cart')
     status = CharField(choices=OrderStatusChoice.choices, default=OrderStatusChoice.PENDING, verbose_name='Status')
+    cart = OneToOneField("order.Cart", CASCADE, verbose_name='Cart')
     shipping_cost = DecimalField(max_digits=10, decimal_places=2)
     total = DecimalField(max_digits=10, decimal_places=2)
 

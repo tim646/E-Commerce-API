@@ -4,10 +4,15 @@ from apps.order.models import Order
 
 
 class OrderDetailSerializer(ModelSerializer):
-    class Mete:
+    class Meta:
         model = Order
         fields = (
-            "cart",
-            "user",
-            "status",
+            'user',
+            'payment_method',
+            'status',
+            'cart',
+            'shipping_cost',
+            'total',
+            'created_at',
+            'updated_at',
         )

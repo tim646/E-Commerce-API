@@ -7,7 +7,6 @@ class OrderDeleteSerializer(ModelSerializer):
     class Meta:
         model = Order
         fields = (
-            "user",
-            "cart",
-            "status",
+            'user',
+            'id'
         )

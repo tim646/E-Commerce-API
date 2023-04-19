@@ -7,7 +7,10 @@ class OrderCreateSerializer(ModelSerializer):
     class Meta:
         model = Order
         fields = (
-            "cart",
-            "user",
-            "status",
+            'user',
+            'payment_method',
+            'status',
+            'cart',
+            'shipping_cost',
+            'total'
         )
