@@ -17,24 +17,20 @@ class LoginSerializer(serializers.Serializer):
 
     class Meta:
         model = User
-        fields = ['phone_number', 'password', 'tokens']
+        fields = ["phone_number", "password", "tokens"]
 
     def validate(self, attrs):
-        phone_number = attrs.get('phone_number')
+        phone_number = attrs.get("phone_number")
         print(phone_number)
-        password = attrs.get('password')
+        password = attrs.get("password")
         user = authenticate(phone_number=phone_number, password=password)
         print(user)
         if not user:
-            raise AuthenticationFailed({
-                'message': 'Phone number or password is not correct'
-            })
+            raise AuthenticationFailed({"message": "Phone number or password is not correct"})
         if not user.is_active:
-            raise AuthenticationFailed({
-                'message': 'Account disabled'
-            })
+            raise AuthenticationFailed({"message": "Account disabled"})
 
         data = {
-            'phone_number': user.phone_number,
+            "phone_number": user.phone_number,
         }
         return data

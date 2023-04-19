@@ -3,8 +3,6 @@ from django.db import models
 
 from .choices import CONDITION_CHOICES
 
-# Create your models here.
-
 
 class ProductType(models.Model):
     name = models.CharField(max_length=50, verbose_name="Name")

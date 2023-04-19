@@ -1,10 +1,9 @@
 import uuid
 
-from phonenumber_field.modelfields import PhoneNumberField
-
 from django.contrib.auth.models import AbstractUser
 from django.contrib.auth.validators import UnicodeUsernameValidator
 from django.db import models
+from phonenumber_field.modelfields import PhoneNumberField
 from rest_framework_simplejwt.tokens import RefreshToken
 
 from apps.common.models import TimeStampedModel
@@ -13,11 +12,11 @@ from apps.users.managers import SoftDeleteUserManager
 
 # Create your models here.
 class User(AbstractUser, TimeStampedModel):
-    phone_number = PhoneNumberField(region='UZ', unique=True, null=True, verbose_name='Phone number')
+    phone_number = PhoneNumberField(region="UZ", unique=True, null=True, verbose_name="Phone number")
 
     first_name = None
     last_name = None
-    full_name = models.CharField(max_length=32, null=True, blank=True, verbose_name='Full name')
+    full_name = models.CharField(max_length=32, null=True, blank=True, verbose_name="Full name")
 
     uuid = models.UUIDField("UUID", unique=True, default=uuid.uuid4, editable=False, db_index=True)
     username = models.CharField(
@@ -60,8 +59,8 @@ class User(AbstractUser, TimeStampedModel):
     def tokens(self):
         refresh = RefreshToken.for_user(self)
         return {
-            'refresh': str(refresh),
-            'access': str(refresh.access_token),
+            "refresh": str(refresh),
+            "access": str(refresh.access_token),
         }
 
     class Meta:
@@ -70,12 +69,12 @@ class User(AbstractUser, TimeStampedModel):
 
 
 class Saved(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='saved')
-    product = models.ForeignKey('product.Product', on_delete=models.CASCADE, related_name='saved')
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="saved")
+    product = models.ForeignKey("product.Product", on_delete=models.CASCADE, related_name="saved")
 
     class Meta:
-        verbose_name = 'Saved'
-        verbose_name_plural = 'Saved'
+        verbose_name = "Saved"
+        verbose_name_plural = "Saved"
 
     def __str__(self):
-        return f'{self.user} - {self.product}'
+        return f"{self.user} - {self.product}"

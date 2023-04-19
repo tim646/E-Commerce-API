@@ -1,5 +1,8 @@
 from django.contrib import admin
-from .models import Category, Brand, ProductType, Supplier, Feature, Product,  ProductImage, ProductReview
+
+from .models import (Brand, Category, Feature, Product, ProductImage,
+                     ProductReview, ProductType, Supplier)
+
 # Register your models here.
 
 admin.site.register(Category)

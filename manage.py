@@ -13,7 +13,7 @@ def main():
     """Run administrative tasks."""
     base_dir = Path(__file__).resolve().parent
     env.read_env(os.path.join(base_dir, ".env"))
-    os.environ.setdefault('DJANGO_SETTINGS_MODULE', env.str("DJANGO_SETTINGS_MODULE"))
+    os.environ.setdefault("DJANGO_SETTINGS_MODULE", env.str("DJANGO_SETTINGS_MODULE"))
     try:
         from django.core.management import execute_from_command_line
     except ImportError as exc:
@@ -25,5 +25,5 @@ def main():
     execute_from_command_line(sys.argv)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()

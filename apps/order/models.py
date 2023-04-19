@@ -1,22 +1,25 @@
-from django.db.models import ForeignKey, CASCADE, PositiveIntegerField, OneToOneField, CharField, Model, DecimalField, \
-    DateTimeField
+from django.db.models import (CASCADE, CharField, DateTimeField, DecimalField,
+                              ForeignKey, Model, OneToOneField,
+                              PositiveIntegerField)
+
 from apps.common.models import TimeStampedModel
+from apps.order.choices import OrderStatusChoice
 
 
 class Cart(TimeStampedModel):
-    user = ForeignKey('users.User', CASCADE, 'carts')
-    product = ForeignKey('product.Product', CASCADE, 'cart')
+    user = ForeignKey("users.User", CASCADE, "carts")
+    product = ForeignKey("product.Product", CASCADE, "cart")
 
     class Meta:
-        unique_together = ['user', 'product']
-        db_table = 'cart'
-        verbose_name_plural = 'Carts'
+        unique_together = ["user", "product"]
+        db_table = "cart"
+        verbose_name_plural = "Carts"
 
 
 class CartItem(TimeStampedModel):
-    cart = ForeignKey('order.Cart', CASCADE, 'cart_items')
-    product = ForeignKey('product.Product', CASCADE, 'cart_item')
-    quantity = PositiveIntegerField(default=1, verbose_name='Quantity')
+    cart = ForeignKey("order.Cart", CASCADE, "cart_items")
+    product = ForeignKey("product.Product", CASCADE, "cart_item")
+    quantity = PositiveIntegerField(default=1, verbose_name="Quantity")
 
     def __str__(self):
         return f"{self.cart.user.username} - {self.product.name}"
@@ -33,9 +36,9 @@ class CartItem(TimeStampedModel):
             self.save()
 
     class Meta:
-        db_table = 'cart_item'
-        verbose_name = 'CartItem'
-        verbose_name_plural = 'CartItems'
+        db_table = "cart_item"
+        verbose_name = "CartItem"
+        verbose_name_plural = "CartItems"
 
     @classmethod
     def add_product(cls, cart, product):
@@ -45,25 +48,26 @@ class CartItem(TimeStampedModel):
 
 
 class Payment(Model):
-    order = ForeignKey('order.Order', CASCADE)
+    order = ForeignKey("order.Order", CASCADE)
     amount = DecimalField(max_digits=10, decimal_places=2)
     created_at = DateTimeField(auto_now_add=True)
 
     class Meta:
-        db_table = 'payment'
+        db_table = "payment"
 
 
 class Order(TimeStampedModel):
-    user = ForeignKey('users.User', CASCADE)
-    cart = OneToOneField('order.Cart', CASCADE)
+    user = ForeignKey("users.User", CASCADE)
+    cart = OneToOneField("order.Cart", CASCADE)
+    status = CharField(choices=OrderStatusChoice.choices, default=OrderStatusChoice.PENDING)
 
     class Meta:
-        db_table = 'order'
+        db_table = "order"
 
 
 class ShippingAddress(TimeStampedModel):
-    user = ForeignKey('users.User', CASCADE)
-    order = OneToOneField('order.Order', CASCADE)
+    user = ForeignKey("users.User", CASCADE)
+    order = OneToOneField("order.Order", CASCADE)
     name = CharField(max_length=255)
     address = CharField(max_length=255)
     city = CharField(max_length=255)
@@ -71,4 +75,4 @@ class ShippingAddress(TimeStampedModel):
     zip_code = CharField(max_length=10)
 
     class Meta:
-        db_table = 'shipping'
+        db_table = "shipping"

@@ -11,7 +11,7 @@ db.sqlite3
 db.sqlite3-journal
 media
 locale
-
+.pre-commit-config.yaml
 
 ### Django.Python Stack ###
 # Byte-compiled / optimized / DLL files
@@ -374,5 +374,6 @@ Temporary Items
 ### macOS Patch ###
 # iCloud generated files
 *.icloud
+trash/
 
 celerybeat-schedule.db
