@@ -16,6 +16,7 @@ class ProductDetailSerializer(ModelSerializer):
     features = serializers.StringRelatedField(many=True)
     images = serializers.SerializerMethodField(read_only=True)
     brand = serializers.StringRelatedField()
+    image = serializers.SerializerMethodField(read_only=True)
 
     class Meta:
         model = Product
@@ -40,5 +41,10 @@ class ProductDetailSerializer(ModelSerializer):
 
     def get_images(self, obj):
         images = obj.images.all()
-        serializer = ProductImagesSerializer(images, many=True)
+        serializer = ProductImagesSerializer(images, many=True, context=self.context)
         return serializer.data
+
+    def get_image(self, obj):
+        if obj.image:
+            return obj.image.url
+        return None
