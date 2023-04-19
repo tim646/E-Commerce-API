@@ -32,6 +32,7 @@ CUSTOM_APPS = [
     "apps.product.apps.ProductConfig",
     "apps.common.apps.CommonConfig",
     "apps.order.apps.OrderConfig",
+    "apps.cart.apps.CartConfig"
 ]
 
 THIRD_PARTY_APPS = [

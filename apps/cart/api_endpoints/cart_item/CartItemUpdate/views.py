@@ -1,8 +1,8 @@
 from django.views.generic import UpdateView
 
-from apps.order.api_endpoints.cart_item.CartItemUpdate.serializers import \
+from apps.cart.api_endpoints.cart_item.CartItemUpdate.serializers import \
     CartItemUpdateSerializer
-from apps.order.models import CartItem
+from apps.cart.models import CartItem
 
 
 class CartItemUpdateView(UpdateView):

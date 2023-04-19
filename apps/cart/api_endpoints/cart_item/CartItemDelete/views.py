@@ -1,8 +1,8 @@
 from rest_framework.generics import DestroyAPIView
 
-from apps.order.api_endpoints.cart_item.CartItemDelete.serializers import \
+from apps.cart.api_endpoints.cart_item.CartItemDelete.serializers import \
     CartItemDeleteSerializer
-from apps.order.models import CartItem
+from apps.cart.models import CartItem
 
 
 class CartItemDeleteView(DestroyAPIView):

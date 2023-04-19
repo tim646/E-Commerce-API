@@ -1,8 +1,8 @@
 from rest_framework.generics import ListAPIView
 
-from apps.order.api_endpoints.cart_item.CartItemList.serializers import \
+from apps.cart.api_endpoints.cart_item.CartItemList.serializers import \
     CartItemListSerializer
-from apps.order.models import CartItem
+from apps.cart.models import CartItem
 
 
 class CartItemList(ListAPIView):
