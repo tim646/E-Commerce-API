@@ -41,6 +41,7 @@ THIRD_PARTY_APPS = [
     "drf_yasg",
     "rest_framework_simplejwt",
     "rest_framework.authtoken",
+    "django_filters",
 ]
 
 INSTALLED_APPS = DJANGO_APPS + CUSTOM_APPS + THIRD_PARTY_APPS
@@ -172,6 +173,8 @@ SWAGGER_SETTINGS = {
         "Bearer": {"type": "apiKey", "in": "header", "name": "Authorization"},
     },
 }
+
+REST_FRAMEWORK = {"DEFAULT_FILTER_BACKENDS": ["django_filters.rest_framework.DjangoFilterBackend"]}
 
 
 RECAPTCHA_PUBLIC_KEY = env.str("RECAPTCHA_PUBLIC_KEY")

@@ -1,17 +1,28 @@
-from django.db.models import CASCADE, ForeignKey, PositiveBigIntegerField, PositiveIntegerField, UniqueConstraint
+from django.db.models import (
+    CASCADE,
+    ForeignKey,
+    PositiveIntegerField,
+    BooleanField,
+)
 
 from apps.common.models import TimeStampedModel
 
 
 class Cart(TimeStampedModel):
-    id = PositiveBigIntegerField(unique=True, primary_key=True)
-    user = ForeignKey("users.User", CASCADE, "cart", verbose_name="User", unique=True)
+    user = ForeignKey("users.User", CASCADE, "cart", verbose_name="User")
+    is_ordered = BooleanField(default=False)
 
     class Meta:
         db_table = "cart"
         verbose_name_plural = "Carts"
-        unique_together = ["id", "user"]
-        constraints = [UniqueConstraint(fields=["user"], name="unique_user_cart")]
+
+    @property
+    def total_price(self):
+        s = 0
+        for cart in self.cartitem_set.all():
+            for product in cart.product.all():
+                s += product.sell_price
+        return s
 
     def __str__(self):
         return f" cart created by {self.user.username}"
@@ -43,7 +54,7 @@ class CartItem(TimeStampedModel):
         unique_together = ["cart", "product"]
         db_table = "cart_item"
         verbose_name = "CartItem"
-        verbose_name_plural = "CartItems"
+        verbose_name_plural = "MyCartItems"
 
     @classmethod
     def add_product(cls, cart, product):
