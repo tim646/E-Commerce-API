@@ -43,6 +43,7 @@ class Supplier(models.Model):
     is_verified_seller = models.BooleanField(default=False, verbose_name="Is verified seller")
     shipping_type = models.CharField(max_length=50, verbose_name="Shipping type")
     image = models.ImageField(upload_to="supplier/", blank=True, null=True, verbose_name="Image")
+    email = models.EmailField(max_length=50, verbose_name="Email")
     date_created = models.DateTimeField(auto_now_add=True, verbose_name="Date created")
 
     def __str__(self):
@@ -63,6 +64,7 @@ class Product(models.Model):
     image = models.ImageField(upload_to="product/%Y/%m/%d", blank=True, null=True, verbose_name="Image")
     product_type = models.ForeignKey(ProductType, on_delete=models.CASCADE, related_name="products")
     material = models.CharField(max_length=50, verbose_name="Material")
+    design = models.CharField(max_length=30, verbose_name="Design")
     warranty = models.CharField(max_length=50, verbose_name="Warranty")
     condition = models.CharField(max_length=50, choices=CONDITION_CHOICES, default="New", verbose_name="Condition")
 

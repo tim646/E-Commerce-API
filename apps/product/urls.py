@@ -1,12 +1,26 @@
 from django.urls import path
 
-from .api_endpoints import product
+from .api_endpoints import product, supplier
 
 app_name = "product"
 
 urlpatterns = [
-    path("", product.ProductListView.as_view(), name="product_list"),
-    path("<int:product_id>/related-products/", product.RelatedProductListView.as_view(), name="related_products"),
-    path("<int:id>/", product.ProductDetailView.as_view(), name="product_detail"),
+    # product
+    path("", product.ProductListView.as_view(), name="product-list"),
+    path("<int:product_id>/related-products/", product.RelatedProductListView.as_view(), name="related-products"),
+    path("<int:id>/", product.ProductDetailView.as_view(), name="product-detail"),
+    path(
+        "<int:product_id>/you-may-like-products/",
+        product.YouMayLikeProductListView.as_view(),
+        name="you-may-like-products",
+    ),
+
+    # supplier
+    path("supplier/<int:id>/", supplier.SupplierDetailForProductView.as_view(), name="supplier-product-list"),
+    path("supplier/<int:id>/detail", supplier.SupplierDetailView.as_view(), name="supplier-detail"),
     # path('<int:id>/<slug:slug>/', views.product_detail, name='product_detail'),
+
+    #     reviews
+
+
 ]

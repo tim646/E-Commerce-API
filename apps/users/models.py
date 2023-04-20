@@ -66,15 +66,3 @@ class User(AbstractUser, TimeStampedModel):
     class Meta:
         verbose_name = "User"
         verbose_name_plural = "Users"
-
-
-class Saved(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="saved")
-    product = models.ForeignKey("product.Product", on_delete=models.CASCADE, related_name="saved")
-
-    class Meta:
-        verbose_name = "Saved"
-        verbose_name_plural = "Saved"
-
-    def __str__(self):
-        return f"{self.user} - {self.product}"

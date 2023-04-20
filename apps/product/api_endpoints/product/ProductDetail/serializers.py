@@ -28,15 +28,18 @@ class ProductDetailSerializer(ModelSerializer):
             "category",
             "original_price",
             "sell_price",
+            "discount_percentage",
             "description",
             "image",
             "product_type",
             "features",
             "brand",
             "material",
+            "design",
             "warranty",
             "condition",
             "images",
+            "supplier_id",
         ]
 
     def get_images(self, obj):

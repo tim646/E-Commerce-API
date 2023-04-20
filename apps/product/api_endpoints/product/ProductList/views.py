@@ -28,4 +28,17 @@ class RelatedProductListView(ListAPIView):
         return queryset
 
 
-__all__ = ["ProductListView", "RelatedProductListView"]
+class YouMayLikeProductListView(ListAPIView):
+    serializer_class = RelatedProductListSerializer
+    pagination_class = LimitOffsetPagination
+
+    def get_queryset(self):
+        product_id = self.kwargs["product_id"]
+        product = Product.objects.get(id=product_id)
+        category = product.category
+        design = product.design
+        queryset = Product.objects.filter(Q(category=category) & Q(design__icontains=design)).exclude(id=product_id)
+        return queryset
+
+
+__all__ = ["ProductListView", "RelatedProductListView", "YouMayLikeProductListView"]
