@@ -4,11 +4,14 @@ from apps.common.models import TimeStampedModel
 
 
 class Cart(TimeStampedModel):
-    user = ForeignKey("users.User", CASCADE, "carts", verbose_name='User')
+    user = ForeignKey("users.User", CASCADE, "cart", verbose_name='User', unique=True)
 
     class Meta:
         db_table = "cart"
         verbose_name_plural = "Carts"
+
+    def __str__(self):
+        return f" cart created by {self.user.username}"
 
 
 class CartItem(TimeStampedModel):

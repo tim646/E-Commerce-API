@@ -8,6 +8,5 @@ class CartItemListSerializer(ModelSerializer):
         model = CartItem
         fields = (
             'cart',
-            'product',
             'quantity',
         )

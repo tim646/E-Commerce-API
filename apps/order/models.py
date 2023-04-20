@@ -24,6 +24,9 @@ class Order(TimeStampedModel):
     class Meta:
         db_table = "order"
 
+    def __str__(self):
+        return "{} - {}".format(self.user.username, self.cart)
+
 
 class ShippingAddress(TimeStampedModel):
     user = ForeignKey("users.User", CASCADE, verbose_name='User')
