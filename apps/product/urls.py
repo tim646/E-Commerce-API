@@ -1,6 +1,6 @@
 from django.urls import path
 
-from .api_endpoints import product, supplier
+from .api_endpoints import product, review, supplier
 
 app_name = "product"
 
@@ -14,13 +14,10 @@ urlpatterns = [
         product.YouMayLikeProductListView.as_view(),
         name="you-may-like-products",
     ),
-
     # supplier
     path("supplier/<int:id>/", supplier.SupplierDetailForProductView.as_view(), name="supplier-product-list"),
     path("supplier/<int:id>/detail", supplier.SupplierDetailView.as_view(), name="supplier-detail"),
     # path('<int:id>/<slug:slug>/', views.product_detail, name='product_detail'),
-
     #     reviews
-
-
+    path("review/create/", review.ProductReviewCreateView.as_view(), name="review-create"),
 ]
