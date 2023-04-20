@@ -15,6 +15,7 @@ class ProductType(models.Model):
 class Category(models.Model):
     name = models.CharField(max_length=50, verbose_name="Name")
     parent = models.ForeignKey("self", on_delete=models.CASCADE, blank=True, null=True, related_name="children")
+    thumbnail = models.ImageField(upload_to="categories/%Y/%m/%d")
 
     def __str__(self):
         return self.name

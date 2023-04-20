@@ -10,9 +10,9 @@ class OrderStatusChoice(TextChoices):
 
 
 class PaymentMethodChoice(TextChoices):
-    PAYPAL = 'PP', 'PayPal'
-    GOOGLE_PAY = 'GP', 'Google Pay'
-    APPLE_PAY = 'AP', 'Apple Pay'
-    BANK_TRANSFER = 'BT', 'Bank Transfer'
-    CASH_ON_DELIVERY = 'COD', 'Cash on Delivery'
-    CASH = 'CA', 'Cash'
+    PAYPAL = "PP", "PayPal"
+    GOOGLE_PAY = "GP", "Google Pay"
+    APPLE_PAY = "AP", "Apple Pay"
+    BANK_TRANSFER = "BT", "Bank Transfer"
+    CASH_ON_DELIVERY = "COD", "Cash on Delivery"
+    CASH = "CA", "Cash"

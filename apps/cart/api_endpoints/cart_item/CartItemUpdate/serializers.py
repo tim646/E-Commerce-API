@@ -7,13 +7,13 @@ class CartItemUpdateSerializer(ModelSerializer):
     class Meta:
         model = CartItem
         fields = (
-            'cart',
-            'product',
-            'quantity',
+            "cart",
+            "product",
+            "quantity",
         )
 
     def update(self, instance, validated_data):
-        quantity = validated_data.get('quantity')
+        quantity = validated_data.get("quantity")
         if instance.product.quantity < quantity:
             raise ValidationError("Insufficient product quantity")
 

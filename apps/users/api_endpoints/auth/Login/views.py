@@ -12,7 +12,7 @@ class LoginView(GenericAPIView):
         serializer = self.serializer_class(data=request.data, context={"request": request})
         serializer.is_valid(raise_exception=True)
 
-        return Response({"success": True, 'data': serializer.data}, status=status.HTTP_200_OK)
+        return Response({"success": True, "data": serializer.data}, status=status.HTTP_200_OK)
 
 
 __all__ = ["LoginView"]

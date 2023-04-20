@@ -6,7 +6,4 @@ from apps.order.models import Order
 class OrderDeleteSerializer(ModelSerializer):
     class Meta:
         model = Order
-        fields = (
-            'user',
-            'id'
-        )
+        fields = ("user", "id")

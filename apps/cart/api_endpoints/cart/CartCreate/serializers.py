@@ -6,6 +6,4 @@ from apps.cart.models import Cart
 class CartCreateSerializer(ModelSerializer):
     class Meta:
         model = Cart
-        fields = (
-            'user',
-        )
+        fields = ("user",)

@@ -1,22 +1,25 @@
-from django.db.models import CASCADE, ForeignKey, PositiveIntegerField
+from django.db.models import CASCADE, ForeignKey, PositiveBigIntegerField, PositiveIntegerField, UniqueConstraint
 
 from apps.common.models import TimeStampedModel
 
 
 class Cart(TimeStampedModel):
-    user = ForeignKey("users.User", CASCADE, "cart", verbose_name='User', unique=True)
+    id = PositiveBigIntegerField(unique=True, primary_key=True)
+    user = ForeignKey("users.User", CASCADE, "cart", verbose_name="User", unique=True)
 
     class Meta:
         db_table = "cart"
         verbose_name_plural = "Carts"
+        unique_together = ["id", "user"]
+        constraints = [UniqueConstraint(fields=["user"], name="unique_user_cart")]
 
     def __str__(self):
         return f" cart created by {self.user.username}"
 
 
 class CartItem(TimeStampedModel):
-    cart = ForeignKey("cart.Cart", CASCADE, "cart_items", verbose_name='Cart')
-    product = ForeignKey("product.Product", CASCADE, "cart_item", verbose_name='Product')
+    cart = ForeignKey("cart.Cart", CASCADE, "cart_items", verbose_name="Cart")
+    product = ForeignKey("product.Product", CASCADE, "cart_item", verbose_name="Product")
     quantity = PositiveIntegerField(default=1, verbose_name="Quantity")
 
     def __str__(self):

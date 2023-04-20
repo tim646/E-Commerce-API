@@ -11,8 +11,17 @@ class ProductListSerializer(ModelSerializer):
 
     class Meta:
         model = Product
-        fields = ["id", "name", "image", "description", "sell_price", "original_price", "discount_percentage", "color",
-                  "rating_avg"]
+        fields = [
+            "id",
+            "name",
+            "image",
+            "description",
+            "sell_price",
+            "original_price",
+            "discount_percentage",
+            "color",
+            "rating_avg",
+        ]
 
     def get_description(self, obj):
         return obj.description[:70] + "..."

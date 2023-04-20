@@ -5,6 +5,4 @@ from apps.cart.models import Cart
 
 class CartDeleteSerializer(ModelSerializer):
     model = Cart
-    fields = (
-        'user'
-    )
+    fields = "user"

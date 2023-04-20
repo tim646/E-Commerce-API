@@ -7,12 +7,12 @@ class OrderDetailSerializer(ModelSerializer):
     class Meta:
         model = Order
         fields = (
-            'user',
-            'payment_method',
-            'status',
-            'cart',
-            'shipping_cost',
-            'total',
-            'created_at',
-            'updated_at',
+            "user",
+            "payment_method",
+            "status",
+            "cart",
+            "shipping_cost",
+            "total",
+            "created_at",
+            "updated_at",
         )
