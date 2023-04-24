@@ -2,15 +2,28 @@ from django.db.models import Q
 from rest_framework.generics import ListAPIView
 from rest_framework.pagination import LimitOffsetPagination
 
+from django_filters.rest_framework import DjangoFilterBackend
+
 from apps.product.models import Product
 
 from .serializers import ProductListSerializer, RelatedProductListSerializer
 
+from .filters import ProductFilter
 
+
+# Create a view class
 class ProductListView(ListAPIView):
-    queryset = Product.objects.all()
-    pagination_class = LimitOffsetPagination
     serializer_class = ProductListSerializer
+    filter_backends = [DjangoFilterBackend]
+    filterset_class = ProductFilter
+
+    def get_queryset(self):
+        queryset = Product.objects.all()
+
+        # Apply the filters
+        queryset = self.filter_queryset(queryset)
+
+        return queryset
 
 
 class RelatedProductListView(ListAPIView):

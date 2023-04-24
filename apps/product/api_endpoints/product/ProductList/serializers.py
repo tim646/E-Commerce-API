@@ -16,11 +16,15 @@ class ProductListSerializer(ModelSerializer):
             "name",
             "image",
             "description",
-            "sell_price",
+            "original_price",
             "original_price",
             "discount_percentage",
+            "sell_price",
             "color",
             "rating_avg",
+            "features",
+            "brand",
+            "category",
         ]
 
     def get_description(self, obj):

@@ -95,6 +95,7 @@ class ProductReview(models.Model):
     rating = models.IntegerField(verbose_name="Rating", validators=[MinValueValidator(1), MaxValueValidator(10)])
     comment = models.TextField(blank=True, null=True, verbose_name="Comment")
     date_created = models.DateTimeField(auto_now_add=True, verbose_name="Date created")
+    date_updated = models.DateTimeField(auto_now=True, verbose_name="Date updated")
 
     def __str__(self):
         return self.product.name
