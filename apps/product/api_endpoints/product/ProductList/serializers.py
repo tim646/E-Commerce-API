@@ -8,15 +8,18 @@ from apps.product.models import Product, ProductReview
 class ProductListSerializer(ModelSerializer):
     description = serializers.SerializerMethodField()
     rating_avg = serializers.SerializerMethodField()
+    category = serializers.StringRelatedField()
+    brand = serializers.StringRelatedField()
+    features = serializers.StringRelatedField(many=True)
 
     class Meta:
         model = Product
+
         fields = [
             "id",
             "name",
             "image",
             "description",
-            "original_price",
             "original_price",
             "discount_percentage",
             "sell_price",

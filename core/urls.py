@@ -1,6 +1,10 @@
 from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib import admin
+from captcha.fields import ReCaptchaField
+from captcha.widgets import ReCaptchaV2Checkbox
+from django.contrib.auth.forms import AuthenticationForm
+from django import forms
 from django.urls import include, path
 
 from core.schema import swagger_urlpatterns
@@ -9,6 +13,20 @@ from core.schema import swagger_urlpatterns
 def trigger_error(request):
     division_by_zero = 1 / 0  # noqa
 
+
+class LoginForm(AuthenticationForm):
+    captcha = ReCaptchaField(widget=ReCaptchaV2Checkbox)
+
+    def clean(self):
+        cleaned_data = super().clean()
+        captcha = cleaned_data.get("captcha")
+        if not captcha:
+            raise forms.ValidationError("Invalid captcha")
+        return cleaned_data
+
+
+admin.site.login_form = LoginForm
+admin.site.login_template = "admin_login/login.html"
 
 urlpatterns = [
     path("api/v1/sentry/TriggerError", trigger_error),

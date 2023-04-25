@@ -1,42 +1,61 @@
 from django_filters import rest_framework as filters
-from apps.product.models import Category, Brand, Feature
-from django import forms
+from apps.product.models import Product
 
 
 class ProductFilter(filters.FilterSet):
     # Add the categories filter
-    categories = filters.ModelMultipleChoiceFilter(
-        queryset=Category.objects.all(), widget=forms.SelectMultiple(attrs={"class": "form-control"})
+    categories = filters.CharFilter(
+        field_name="category__name",
+        lookup_expr="icontains",
     )
+
     # Add the brands filter
-    brands = filters.ModelMultipleChoiceFilter(
-        queryset=Brand.objects.all(), widget=forms.SelectMultiple(attrs={"class": "form-control"})
+    brands = filters.CharFilter(
+        field_name="brand__name",
+        lookup_expr="icontains",
     )
+
     # Add the features filter
-    features = filters.ModelMultipleChoiceFilter(
-        queryset=Feature.objects.all(), widget=forms.SelectMultiple(attrs={"class": "form-control"})
+    features = filters.CharFilter(
+        field_name="features__name",
+        lookup_expr="icontains",
     )
+
     # Add the price range filter
-    price_min = filters.NumberFilter(min_value=0, label="Price Min")
-    price_max = filters.NumberFilter(min_value=0, label="Price Max")
+    price_min = filters.NumberFilter(min_value=0)
+    price_max = filters.NumberFilter(min_value=0)
 
     # Define the queryset
     def filter_queryset(self, queryset):
+        data = self.data
+        if not data:
+            return queryset
+
         # Filter by categories
-        if self.data.get("categories"):
-            categories = self.data.get("categories").split(",")
-            queryset = queryset.filter(category__in=categories)
+        categories = data.getlist("categories")
+        if categories:
+            queryset = queryset.filter(category__name__in=categories)
 
         # Filter by brands
-        if self.data.get("brands"):
-            queryset = queryset.filter(brand__in=self.data.get("brands"))
+        brands = data.getlist("brands")
+        if brands:
+            queryset = queryset.filter(brand__name__in=brands)
 
         # Filter by features
-        if self.data.get("features"):
-            queryset = queryset.filter(features__in=self.data.get("features"))
+        features = data.getlist("features")
+        if features:
+            queryset = queryset.filter(features__name__in=features)
 
         # Filter by price range
-        if self.data.get("price_min") and self.data.get("price_max"):
-            queryset = queryset.filter(original_price__range=(self.data.get("price_min"), self.data.get("price_max")))
+        price_min = data.get("price_min")
+        price_max = data.get("price_max")
+        if price_min is not None:
+            queryset = queryset.filter(original_price__gte=price_min)
+        if price_max is not None:
+            queryset = queryset.filter(original_price__lte=price_max)
 
         return queryset
+
+    class Meta:
+        model = Product
+        fields = ["categories", "brands", "features", "price_min", "price_max"]

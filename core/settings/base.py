@@ -42,6 +42,7 @@ THIRD_PARTY_APPS = [
     "rest_framework_simplejwt",
     "rest_framework.authtoken",
     "django_filters",
+    "captcha",
 ]
 
 INSTALLED_APPS = DJANGO_APPS + CUSTOM_APPS + THIRD_PARTY_APPS
@@ -98,7 +99,7 @@ ROOT_URLCONF = "core.urls"
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [BASE_DIR / "templates", BASE_DIR / "media/templates"],
+        "DIRS": [BASE_DIR / "templates"],
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
@@ -181,4 +182,4 @@ SWAGGER_SETTINGS = {
 RECAPTCHA_PUBLIC_KEY = env.str("RECAPTCHA_PUBLIC_KEY")
 RECAPTCHA_PRIVATE_KEY = env.str("RECAPTCHA_PRIVATE_KEY")
 
-RECAPTCHA_VERIFY_REQUEST_TIMEOUT = 10
+RECAPTCHA_VERIFY_REQUEST_TIMEOUT = 5
