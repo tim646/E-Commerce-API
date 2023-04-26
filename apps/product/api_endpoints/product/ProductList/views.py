@@ -15,15 +15,8 @@ from .filters import ProductFilter
 class ProductListView(ListAPIView):
     serializer_class = ProductListSerializer
     filter_backends = [DjangoFilterBackend]
+    queryset = Product.objects.all()
     filterset_class = ProductFilter
-
-    def get_queryset(self):
-        queryset = Product.objects.all()
-
-        # Apply the filters
-        queryset = self.filter_queryset(queryset)
-
-        return queryset
 
 
 class RelatedProductListView(ListAPIView):

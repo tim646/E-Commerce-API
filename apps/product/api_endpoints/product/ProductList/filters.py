@@ -1,61 +1,41 @@
-from django_filters import rest_framework as filters
+import django_filters
 from apps.product.models import Product
 
 
-class ProductFilter(filters.FilterSet):
+class ProductFilter(django_filters.FilterSet):
     # Add the categories filter
-    categories = filters.CharFilter(
-        field_name="category__name",
-        lookup_expr="icontains",
-    )
+    categories = django_filters.CharFilter(field_name="category__id", method="filter_categories")
 
     # Add the brands filter
-    brands = filters.CharFilter(
-        field_name="brand__name",
-        lookup_expr="icontains",
-    )
+    brands = django_filters.CharFilter(field_name="brand__id", method="filter_brands")
 
     # Add the features filter
-    features = filters.CharFilter(
-        field_name="features__name",
-        lookup_expr="icontains",
-    )
+    features = django_filters.CharFilter(field_name="features__id", method="filter_features")
 
     # Add the price range filter
-    price_min = filters.NumberFilter(min_value=0)
-    price_max = filters.NumberFilter(min_value=0)
-
-    # Define the queryset
-    def filter_queryset(self, queryset):
-        data = self.data
-        if not data:
-            return queryset
-
-        # Filter by categories
-        categories = data.getlist("categories")
-        if categories:
-            queryset = queryset.filter(category__name__in=categories)
-
-        # Filter by brands
-        brands = data.getlist("brands")
-        if brands:
-            queryset = queryset.filter(brand__name__in=brands)
-
-        # Filter by features
-        features = data.getlist("features")
-        if features:
-            queryset = queryset.filter(features__name__in=features)
-
-        # Filter by price range
-        price_min = data.get("price_min")
-        price_max = data.get("price_max")
-        if price_min is not None:
-            queryset = queryset.filter(original_price__gte=price_min)
-        if price_max is not None:
-            queryset = queryset.filter(original_price__lte=price_max)
-
-        return queryset
+    price_min = django_filters.NumberFilter(
+        field_name="original_price",
+        lookup_expr="gte",
+        label="Min price",
+    )
+    price_max = django_filters.NumberFilter(
+        field_name="original_price",
+        lookup_expr="lte",
+        label="Max price",
+    )
 
     class Meta:
         model = Product
         fields = ["categories", "brands", "features", "price_min", "price_max"]
+
+    def filter_categories(self, queryset, name, value):
+        categories = value.split(",")
+        return queryset.filter(category__id__in=categories)
+
+    def filter_brands(self, queryset, name, value):
+        brands = value.split(",")
+        return queryset.filter(brand__id__in=brands)
+
+    def filter_features(self, queryset, name, value):
+        features = value.split(",")
+        return queryset.filter(features__id__in=features)
